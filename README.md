@@ -86,3 +86,20 @@ PUT /students/_mapping
   }
 }
 ```
+
+## Exercice Mapping
+### Comment Elasticsearch procède-t-il au <b>mapping</b> ?
+Lors d'un mapping d'un index procédé par Elasticsearch, soit le mapping est <b>dynamique</b> soit il est <b>statique</b>. 
+
+Lorsqu'il est dynamique, à l'indexation, les types des champs sont déduits et il est possible d'ajouter des champs autres que ces des index déjà présents. Et lorsqu'il est statique, les types et les champs sont déjà défini au préalable et à l'indexation, l'objet doit correspondre à ce mapping.
+
+### Peut-on modifier le mapping sans recréer l’index ? 
+Oui, il est possible de modifier le mapping sans recréer l'index avec par exemple la requête ci-dessous pour ajouter le champ de texte "city" à l'index "students"
+```
+PUT /students/_mapping
+{
+  "properties": {
+    "city": { "type": "text" }
+  }
+}
+```
