@@ -103,3 +103,12 @@ PUT /students/_mapping
   }
 }
 ```
+
+## Exercice Analyseur
+### Définir Tokenisation et Normalisation
+Pour permettre d'analyser et de faire correspondre des mots-clés avec un long texte pour avoir les résultats les plus pertinents dans Elasticsearch, il peut être nécessaire de mettre en place des analyseurs comme la tokenisation, la normalisation ou encore des moyens de recherche personnalisés.
+
+Tokenisation: Compacter une phrase en plusieurs combinaisons de mots-clés. Exemple, nous avons dans un champ texte la phrase suivante : ```le chat roux court dans la rue```. Si on applique la tokenisation, on pourra retrouver cette phrase avec les mots clés "chat roux", "chat rue" alors que sans on aurait pas eu forcément tous les résultats pertinents.
+
+Normalisation: Standardiser après la tokenisation, pour faire correspondre nos tokens qui sont similaires pas exactes aux mots-clés de la recherche. 
+On peut faire cela en mettant par exemple en miniscules tous les caractères (Chat -> chat), en réduisant le mot à sa racine (rousse -> roux), en reconnaissant les synonymes pour les unifier (rue et cour -> rue).
