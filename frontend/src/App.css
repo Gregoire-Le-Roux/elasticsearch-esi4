@@ -1,0 +1,10 @@
+.app-center {
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+}
