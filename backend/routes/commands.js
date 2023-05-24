@@ -25,7 +25,7 @@ module.exports = function (app, elasticClient) {
         res.send(result);
     });
 
-    // Créé plusieurs documents (bulk)
+    // Créé plusieurs documents (bulk) à partir d'un tableau d'objet command
     app.post("/create-multiple-command", async (req, res) => {
         let body = [], commands = req.body;
         commands.map((command) => {
@@ -55,7 +55,7 @@ module.exports = function (app, elasticClient) {
         // Dans le cas où le champ de recherche est vide, on retourne tous les documents
         let query = { match_all: {} };
         if(req.query.query) {
-            query = { fuzzy: { title: req.query.query } };
+            query = { fuzzy: { itemName: req.query.query } };
         }
 
         const result = await elasticClient.search({

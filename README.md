@@ -112,3 +112,33 @@ Tokenisation: Compacter une phrase en plusieurs combinaisons de mots-clés. Exem
 
 Normalisation: Standardiser après la tokenisation, pour faire correspondre nos tokens qui sont similaires pas exactes aux mots-clés de la recherche. 
 On peut faire cela en mettant par exemple en miniscules tous les caractères (Chat -> chat), en réduisant le mot à sa racine (rousse -> roux), en reconnaissant les synonymes pour les unifier (rue et cour -> rue).
+
+## TP2 - Projet avec Elasticsearch
+
+Projet: React pour le front et Node(Express) pour le back + Elasticsearch & Kibana en local
+
+(J'ai suivi principalement ce guide pour réaliser le projet:  https://developer.okta.com/blog/2022/04/27/ultimate-guide-elasticsearch-nodejs)
+
+### Mettre en place le projet en local 
+
+Il faut tout d'abord avoir fait la mise en place d'Elasticsearch & de Kibana comme présenté dans la première partie du TP1.
+
+Ensuite, télécharger ce dépôt, installer les dépendances dans le dossier <b>frontend</b> et <b>backend</b> avec la commande : `npm i install`
+
+Côté backend, faire une copie du fichier <b>.elastic.env-example</b> en le renommant <b>.elastic.env</b> et y ajouter les <b>variables d'environnement </b> récupérer d'Elasticsearch.
+
+De plus, coller à la racine du dossier backend, le certificat généré par Elasticsearch nommé <b>http_ca.crt</b> qui se situe dans le dossier d'Elasticsearch au chemin <b>~\elasticsearch-8.7.1\config\certs</b>
+
+Il ne reste plus qu'à lancer :
+- Elasticsearch: ```bin\elasticsearch.bat```
+- Kibana: ```bin\kibana.bat```
+- Frontend: ```npm run dev```
+- Backend: ```npm run dev```
+
+### Créer un index avec un mapping spécifique
+Pour créer un index avec l'api, voir le fichier <b>create-index.js</b> dans le dossier backend et pour exécuter le fichier, faire la commande: `node create-index.js`
+
+### Indexer des documents 
+Toutes les fonctions pour récupérer, ajouter, supprimer, recherher des documents se trouve dans le fichier <b>.\backend\routes\commands.js</b> et il y a deux routes pour créer des documents. 
+
+<b>/create-command</b> pour indexer un seul document et <b>/create-multiple-command</b> pour indexer plusieurs document avec bulk.

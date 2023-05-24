@@ -12,7 +12,7 @@ import {
 import { DataGrid, frFR } from "@mui/x-data-grid";
 import { Add, Search, Delete } from "@mui/icons-material";
 import { faker } from "@faker-js/faker";
-
+import moment from "moment";
 import "./App.css"
 
 const columns = [
@@ -51,6 +51,7 @@ const columns = [
     headerName: "Date",
     flex: 1,
     minWidth: 150,
+    renderCell: (rowData) => moment(rowData.value).format("DD/MM/YY HH:mm")
   },
 ];
 
@@ -144,7 +145,7 @@ const App = () => {
     return (
         <div className="app-center">
             <Container maxWidth="md">
-                <h1 style={{ textAlign: "center" }} >Elasticsearch</h1>
+                <h1 style={{ textAlign: "center" }} >Elasticsearch - Commandes</h1>
                 <TextField
                     placeholder="Rechercher"
                     fullWidth
