@@ -177,3 +177,20 @@ Pour réaliser ces analyses, nous avons ce qu'on appelle des <b>analyzer</b> qui
 - <b>la tokenisation</b>, séparé le texte en plusieurs en plusieurs parties appelées <b>tokens</b>. Par exemple, enlever tous les espaces, les ponctuactions, les déterminants d'une phrase pour ne garder que les mots les plus importants pour notre recherche.
 - <b>la normalisation</b>, ajout, change ou supprime les tokens pour les faire correspondre à notre recherche. Par exemple, garder que les racines des mots, mettre en miniscules pour augmenter la pertinence de la recherche.
 
+###	Utilisez l’API _analyze pour tester des analyseurs et n’utilisez que des mappings explicites
+
+Exemples d'utilisations de l'API _analyse :
+
+    GET _analyze
+    {
+      "tokenizer" : "standard",
+      "filter" : ["lowercase"],
+      "text" : "pizza"
+    }
+
+    GET _analyze
+    {
+      "tokenizer" : "whitespace",
+      "filter" : ["lowercase"],
+      "text" : "Rubber towel"
+    }
