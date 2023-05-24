@@ -7,7 +7,7 @@ const createIndex = async (indexName) => {
       properties: {
         billNo: { type: 'integer' },
         country: { type: 'text' },
-        itemName: { type: 'keyword' },
+        itemName: { type: 'text' },
         date: { type: 'date' },
         price: { type: 'integer' },
         quantity: { type: 'integer' },

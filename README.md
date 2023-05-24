@@ -115,7 +115,7 @@ On peut faire cela en mettant par exemple en miniscules tous les caractères (Ch
 
 ## TP2 - Projet avec Elasticsearch
 
-Projet: React pour le front et Node(Express) pour le back + Elasticsearch & Kibana en local
+Projet: Suivi de commandes réalisées dans les magasins à travers le monde. React pour le front et Node(Express) pour le back + Elasticsearch & Kibana en local
 
 (J'ai suivi principalement ce guide pour réaliser le projet:  https://developer.okta.com/blog/2022/04/27/ultimate-guide-elasticsearch-nodejs)
 
@@ -123,7 +123,7 @@ Projet: React pour le front et Node(Express) pour le back + Elasticsearch & Kiba
 
 Il faut tout d'abord avoir fait la mise en place d'Elasticsearch & de Kibana comme présenté dans la première partie du TP1.
 
-Ensuite, télécharger ce dépôt, installer les dépendances dans le dossier <b>frontend</b> et <b>backend</b> avec la commande : `npm i install`
+Ensuite, télécharger ce dépôt, installer les dépendances dans le dossier <b>frontend</b> et <b>backend</b> avec la commande : `npm install`
 
 Côté backend, faire une copie du fichier <b>.elastic.env-example</b> en le renommant <b>.elastic.env</b> et y ajouter les <b>variables d'environnement </b> récupérer d'Elasticsearch.
 
@@ -141,4 +141,39 @@ Pour créer un index avec l'api, voir le fichier <b>create-index.js</b> dans le 
 ### Indexer des documents 
 Toutes les fonctions pour récupérer, ajouter, supprimer, recherher des documents se trouve dans le fichier <b>.\backend\routes\commands.js</b> et il y a deux routes pour créer des documents. 
 
-<b>/create-command</b> pour indexer un seul document et <b>/create-multiple-command</b> pour indexer plusieurs document avec bulk.
+<b>/create-command</b> pour indexer un seul document et <b>/create-multiple-command</b> pour indexer plusieurs documents avec bulk.
+
+### Recherche de documents
+La recherche de documents est réalisée par la route <b>/search</b> qui prend en paramètre du texte.
+
+La query ci-dessous recherche les commandes selon le paramètre, en regardant dans les champs du nom du produit et dans le pays si un mot correspond à la recherche. L'analyzer est le standard, il permet de comparer la recherche et les champs en les mettant en miniscules, cherchant les correspondances de mots à n'importe quelle position...
+
+    query = {
+        multi_match: { 
+            query: req.query.query,
+            analyzer: "standard",
+            fields: ["itemName", "country"]
+        } 
+    }
+La query ci-dessus en requête correspond à : 
+
+    GET commands/_search
+    {
+      "query": {
+        "multi_match": {
+          "query":  "req.query.query",
+          "analyzer": "standard", 
+          "fields": ["itemName", "country"]
+        }
+      }
+    }
+
+Des filtres sont aussi disponibles sur les colonnes du tableau pour chercher selon une valeur dans une colonne, trier par colonne.
+###	Tenter d’expliquer comment les données indexées sont analysées 
+Lorsque Elasticsearch réalise une analyse, son objectif est de renvoyer les documents étant les plus pertinents plutôt que ceux correspondant le plus aux termes de la recherche. 
+
+Pour réaliser ces analyses, nous avons ce qu'on appelle des <b>analyzer</b> qui sont réalisés en trois étapes : 
+- <b>les filtres de charactères</b>, qui peut ajouter, supprimer ou changer des charactères. Par exemple, de retirer des balises HTML dans le texte.
+- <b>la tokenisation</b>, séparé le texte en plusieurs en plusieurs parties appelées <b>tokens</b>. Par exemple, enlever tous les espaces, les ponctuactions, les déterminants d'une phrase pour ne garder que les mots les plus importants pour notre recherche.
+- <b>la normalisation</b>, ajout, change ou supprime les tokens pour les faire correspondre à notre recherche. Par exemple, garder que les racines des mots, mettre en miniscules pour augmenter la pertinence de la recherche.
+

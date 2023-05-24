@@ -55,7 +55,13 @@ module.exports = function (app, elasticClient) {
         // Dans le cas où le champ de recherche est vide, on retourne tous les documents
         let query = { match_all: {} };
         if(req.query.query) {
-            query = { fuzzy: { itemName: req.query.query } };
+            query = { 
+                multi_match: { 
+                    query: req.query.query,
+                    analyzer: "standard",
+                    fields: ["itemName", "country"]
+                } 
+            };
         }
 
         const result = await elasticClient.search({
