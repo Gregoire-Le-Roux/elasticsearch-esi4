@@ -194,3 +194,17 @@ Exemples d'utilisations de l'API _analyse :
       "filter" : ["lowercase"],
       "text" : "Rubber towel"
     }
+
+
+## TP3
+### Schéma des concepts d'Elasticsearch
+
+
+### Expliquez comment Elasticsearch stocke ses données et comment certaines de ces notions permettent de gagner en robustesse (en termes de sauvegarde et d’intégrité des données).
+Pour stocker ses données, Elasticsearch les stocke dans une table appelée <b>index</b>. Il est possible de créer un alias de l'index qui s'utilise alors comme l'index initial, en changeant par exemple l'index en cours d'utilisation par l'alias et donc peut permettre la maintenance d'index sans l'interruption du service.
+
+De plus, Elasticsearch a un système de <b>cluster</b> qui est constitué de plusieurs <b>noeuds</b> qui peuvent communiquer entre eux et avec l'index. Chaque noeud correspond à une instance d'Elasticsearch et a un ou plusieurs rôles. Les rôles définissent les tâches que peut réaliser chaque noeud et le cluster doit obligatoirement avoir un noeud avec un rôle <b>master</b> (gestion du cluster) et <b>data</b> (gestion des index/shards).
+
+Il est conseillé d'avoir au moins 3 noeuds master dans un cluster disposé sur 3 machines différentes, cela permet à Elasticsearch de gagner robustesse en terme d’intégrité des données car même si un noeud tombe en panne, il reste au moins 2 autres qui peuvent reprendre la charge et gérer le cluster.
+
+Les noeuds avec le rôle data servent à la gestion des index et des shards, un <b>shard</b> étant une partie de l'index que l'on va stocker dans un noeud. Ensuite, on peut créer un <b>réplica</b> de ce shard que l'on va stocker sur un autre noeud, cela permettra en cas d'incident avec le shard primaire d'avoir une redondance des données dans le shard réplica.
