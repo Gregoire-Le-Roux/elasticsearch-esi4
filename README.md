@@ -199,6 +199,8 @@ Exemples d'utilisations de l'API _analyse :
 ## TP3
 ### Schéma des concepts d'Elasticsearch
 
+<img width="1894" alt="Schéma global permettant l’illustration de concepts d’Elasticsearch et leurs interactions" src="https://github.com/Gregoire-Le-Roux/elasticsearch-esi4/assets/84314581/8451566a-2bcf-424f-8adf-d43c3ee8c472">
+
 
 ### Expliquez comment Elasticsearch stocke ses données et comment certaines de ces notions permettent de gagner en robustesse (en termes de sauvegarde et d’intégrité des données).
 Pour stocker ses données, Elasticsearch les stocke dans une table appelée <b>index</b>. Il est possible de créer un alias de l'index qui s'utilise alors comme l'index initial, en changeant par exemple l'index en cours d'utilisation par l'alias et donc peut permettre la maintenance d'index sans l'interruption du service.
