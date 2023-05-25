@@ -1,6 +1,11 @@
 # Elasticsearch ESI4
 Cours d'Elasticsearch la semaine du 22/05/2023 par Mounir B.
 
+[TP1](https://github.com/Gregoire-Le-Roux/elasticsearch-esi4#tp1---mise-en-place-delasticsearch--kibana-en-local)
+
+[TP2](https://github.com/Gregoire-Le-Roux/elasticsearch-esi4#tp2---projet-avec-elasticsearch)
+
+[TP3](https://github.com/Gregoire-Le-Roux/elasticsearch-esi4#tp3)
 ## TP1 - Mise en place d'Elasticsearch & Kibana en local
 
 Installer la dernière version d'Elasticsearch sur ce lien : https://www.elastic.co/fr/downloads/elasticsearch
@@ -23,7 +28,7 @@ Ensuite coller le token récupérer au préalable par elasticsearch et faire la 
 
 Enfin, après la liaison, se connecter avec les identifiants "elastic" pour le user et le mot de passe généré précédemment.
 
-    Attention à vérifier que vous avez assez d'espace sur votre disque et il arrive parfois que la liaison entre Kibana et Elasticsearch ou la connexion à Kibana retourne une erreur mais cela peut être due à la connexion internet.
+    Attention à vérifier que vous avez assez d'espace sur votre disque, il peut arriver que la liaison entre Kibana et Elasticsearch ou la connexion à Kibana retourne une erreur mais cela peut être aussi due à la connexion internet, il peut suffir de simplement réessayer.
 
 ### Créer un index avec Mapping explicite
 ```
@@ -222,7 +227,7 @@ Un shard est stocké sur un noeud et Elasticsearch gère automatiquement la rép
 
 Il est aussi possible de faire de la mise à l'échelle en ajoutant des replicas pour offrir une meilleure disponibilité ou encore en ajoutant des index en répartissant les données.
 
-### B - D’après vos recherches pourquoi l’utiliser ? Est-ce le bon paramètre de recherche pour effectuer de la recherche paginée ? 
+### B - D’après vos recherches pourquoi utiliser scroll API ? Est-ce le bon paramètre de recherche pour effectuer de la recherche paginée ? 
 
 Exemple d'utilisation de la scroll API:
 
