@@ -175,7 +175,7 @@ const App = () => {
                         size="small"
                         value={nbCommand}
                         type="number"
-                        onChange={(event) =>  setNbCommand(event.target.value >= 1 && event.target.value <= 150 ? event.target.value : nbCommand)}
+                        onChange={(event) =>  setNbCommand(event.target.value >= 1 ? event.target.value <= 150 ? event.target.value : 150 : nbCommand)}
                         InputProps={{ min: "1", max: "150" }}
                         style={{ width: "75px"}}
                     />

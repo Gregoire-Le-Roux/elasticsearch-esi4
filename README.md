@@ -117,6 +117,10 @@ On peut faire cela en mettant par exemple en miniscules tous les caractères (Ch
 
 Projet: Suivi de commandes réalisées dans les magasins à travers le monde. React pour le front et Node(Express) pour le back + Elasticsearch & Kibana en local
 
+Dataset: Fichier <b>Dataset-Commands.csv</b> à la racine du projet
+
+(Source: https://www.kaggle.com/datasets/aslanahmedov/market-basket-analysis)
+
 (J'ai suivi principalement ce guide pour réaliser le projet:  https://developer.okta.com/blog/2022/04/27/ultimate-guide-elasticsearch-nodejs)
 
 ### Mettre en place le projet en local 
@@ -197,12 +201,12 @@ Exemples d'utilisations de l'API _analyse :
 
 
 ## TP3
-### Schéma des concepts d'Elasticsearch
+### A - Schéma des concepts d'Elasticsearch
 
 <img width="1894" alt="Schéma global permettant l’illustration de concepts d’Elasticsearch et leurs interactions" src="https://github.com/Gregoire-Le-Roux/elasticsearch-esi4/assets/84314581/8451566a-2bcf-424f-8adf-d43c3ee8c472">
 
 
-### Expliquez comment Elasticsearch stocke ses données et comment certaines de ces notions permettent de gagner en robustesse (en termes de sauvegarde et d’intégrité des données).
+### A - Expliquez comment Elasticsearch stocke ses données et comment certaines de ces notions permettent de gagner en robustesse (en termes de sauvegarde et d’intégrité des données).
 Pour stocker ses données, Elasticsearch les stocke dans une table appelée <b>index</b>. Il est possible de créer un alias de l'index qui s'utilise alors comme l'index initial, en changeant par exemple l'index en cours d'utilisation par l'alias et donc peut permettre la maintenance d'index sans l'interruption du service.
 
 De plus, Elasticsearch a un système de <b>cluster</b> qui est constitué de plusieurs <b>noeuds</b> qui peuvent communiquer entre eux et avec l'index. Chaque noeud correspond à une instance d'Elasticsearch et a un ou plusieurs rôles. Les rôles définissent les tâches que peut réaliser chaque noeud et le cluster doit obligatoirement avoir un noeud avec un rôle <b>master</b> (gestion du cluster) et <b>data</b> (gestion des index/shards).
@@ -211,9 +215,31 @@ Il est conseillé d'avoir au moins 3 noeuds master dans un cluster disposé sur 
 
 Les noeuds avec le rôle data servent à la gestion des index et des shards, un <b>shard</b> étant une partie de l'index que l'on va stocker dans un noeud. Ensuite, on peut créer un <b>réplica</b> de ce shard que l'on va stocker sur un autre noeud, cela permettra en cas d'incident avec le shard primaire d'avoir une redondance des données dans le shard réplica.
 
-### Résumez les fonctionnalités de mise à l’échelle
+### A - Résumez les fonctionnalités de mise à l’échelle
 Elasticsearch a plusieurs fonctionnalités pour la mise à l'échelle, tout d'abord, à savoir que sur Elasticsearch, l'unité de base de la mise à l'échelle est le shard. Donc lorsqu'un shard commence à avoir beaucoup de données, on peut en ajouter un pour partager la charge. Mais attention à ne pas trop en avoir car si des shards ne sont pas sollicités cela va juste consommer beaucoup de ressources et provoquer des ralentissements sur le système.
 
 Un shard est stocké sur un noeud et Elasticsearch gère automatiquement la répartition des shards sur les noeuds. Sachant qu'il est conseillé d'avoir toujours plus de shards que de noeuds, les shards peuvent changer de noeud rapidement et sans interruption de service.
 
 Il est aussi possible de faire de la mise à l'échelle en ajoutant des replicas pour offrir une meilleure disponibilité ou encore en ajoutant des index en répartissant les données.
+
+### B - D’après vos recherches pourquoi l’utiliser ? Est-ce le bon paramètre de recherche pour effectuer de la recherche paginée ? 
+
+Exemple d'utilisation de la scroll API:
+
+    GET /commands/_search?scroll=1m
+
+    GET /_search/scroll
+    {
+      "scroll" : "1m",
+      "scroll_id" : "FGluY2x1ZGVfY29udGV4dF91dWlkDXF1ZXJ5QW5kRmV0Y2gBFnBkams1RWxaUlFTeW1UWVFJZXhsOGcAAAAAAAAGshZkRHJMY1AtM1RiU2ZndVBTRFJ0UTh3"
+    }
+
+Scroll API permet de retrouver rapidement un grand nombre de résultats, selon un scroll ID généré par une requête search effectuée au préalable. Scroll API va récupérer les données avec les mêmes critères de recherche que le search mais ce sera les données suivantes du search. À savoir que les résultats renvoyés du scroll API seront au même état au moment du search, c'est-à-dire que toute indexation, modification ou suppression ne seront pas prises en compte.
+
+L'utilisation de scroll API sert pour récupérer beaucoup de données en une seule requête mais n'est pas pertinent pour utiliser dans le cas d'une recherche paginée due à la propriété de ne pas avoir les modifications  entre le temps du search et du scroll donc des informations pas à jour peuvent être affiché à l'utilisateur, ce qui est déconseillé. Il serait plus préférable d'utiliser la scroll API par exemple dans le cas où l'on voudrait ré-indexer les données d'un index dans un nouveau.
+
+### C - Kibana: Quel est l’usage principal de Kibana ? 
+Le principal usage de Kibana est la data visualisation avec des tableaux, des graphes de données.
+
+### Qu’est-ce qu’un Dashboard ? 
+Dans Kibana, un Dashboard est le regroupement de visualisations créé à partir de données d'index.
