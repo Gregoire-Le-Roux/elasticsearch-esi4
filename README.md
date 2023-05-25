@@ -210,3 +210,10 @@ De plus, Elasticsearch a un système de <b>cluster</b> qui est constitué de plu
 Il est conseillé d'avoir au moins 3 noeuds master dans un cluster disposé sur 3 machines différentes, cela permet à Elasticsearch de gagner robustesse en terme d’intégrité des données car même si un noeud tombe en panne, il reste au moins 2 autres qui peuvent reprendre la charge et gérer le cluster.
 
 Les noeuds avec le rôle data servent à la gestion des index et des shards, un <b>shard</b> étant une partie de l'index que l'on va stocker dans un noeud. Ensuite, on peut créer un <b>réplica</b> de ce shard que l'on va stocker sur un autre noeud, cela permettra en cas d'incident avec le shard primaire d'avoir une redondance des données dans le shard réplica.
+
+### Résumez les fonctionnalités de mise à l’échelle
+Elasticsearch a plusieurs fonctionnalités pour la mise à l'échelle, tout d'abord, à savoir que sur Elasticsearch, l'unité de base de la mise à l'échelle est le shard. Donc lorsqu'un shard commence à avoir beaucoup de données, on peut en ajouter un pour partager la charge. Mais attention à ne pas trop en avoir car si des shards ne sont pas sollicités cela va juste consommer beaucoup de ressources et provoquer des ralentissements sur le système.
+
+Un shard est stocké sur un noeud et Elasticsearch gère automatiquement la répartition des shards sur les noeuds. Sachant qu'il est conseillé d'avoir toujours plus de shards que de noeuds, les shards peuvent changer de noeud rapidement et sans interruption de service.
+
+Il est aussi possible de faire de la mise à l'échelle en ajoutant des replicas pour offrir une meilleure disponibilité ou encore en ajoutant des index en répartissant les données.
