@@ -236,10 +236,22 @@ Exemple d'utilisation de la scroll API:
 
 Scroll API permet de retrouver rapidement un grand nombre de résultats, selon un scroll ID généré par une requête search effectuée au préalable. Scroll API va récupérer les données avec les mêmes critères de recherche que le search mais ce sera les données suivantes du search. À savoir que les résultats renvoyés du scroll API seront au même état au moment du search, c'est-à-dire que toute indexation, modification ou suppression ne seront pas prises en compte.
 
-L'utilisation de scroll API sert pour récupérer beaucoup de données en une seule requête mais n'est pas pertinent pour utiliser dans le cas d'une recherche paginée due à la propriété de ne pas avoir les modifications  entre le temps du search et du scroll donc des informations pas à jour peuvent être affiché à l'utilisateur, ce qui est déconseillé. Il serait plus préférable d'utiliser la scroll API par exemple dans le cas où l'on voudrait ré-indexer les données d'un index dans un nouveau.
+L'utilisation de scroll API sert pour récupérer beaucoup de données en une seule requête mais n'est pas pertinent pour utiliser dans le cas d'une recherche paginée due à la propriété de ne pas avoir les modifications entre le temps du search et du scroll donc des informations pas à jour peuvent être affiché à l'utilisateur, ce qui est déconseillé. Il serait plus préférable d'utiliser la scroll API par exemple dans le cas où l'on voudrait ré-indexer les données d'un index dans un nouveau.
+Pour effectuer de la recherche paginée, le paramètre <b>search_after</b> de search est utile pour récupérer la page suivante.
 
 ### C - Kibana: Quel est l’usage principal de Kibana ? 
 Le principal usage de Kibana est la data visualisation avec des tableaux, des graphes de données.
 
 ### Qu’est-ce qu’un Dashboard ? 
 Dans Kibana, un Dashboard est le regroupement de visualisations créé à partir de données d'index.
+
+### Créer deux visualisations, Créer un dashboard
+![Dashboard - Kibana](https://github.com/Gregoire-Le-Roux/elasticsearch-esi4/assets/84314581/acc32239-669b-4f2d-9a7b-b90e76b98a22)
+
+### Explorer les données (Discover)
+![Discover - Kibana](https://github.com/Gregoire-Le-Roux/elasticsearch-esi4/assets/84314581/67d36943-a51f-4afc-ba2f-9c187a5d49f0)
+
+### Créer une data view
+![Create Data View - Kibana](https://github.com/Gregoire-Le-Roux/elasticsearch-esi4/assets/84314581/8e8e97cf-6b3a-4bf3-b1e3-e753c3f63227)
+
+
